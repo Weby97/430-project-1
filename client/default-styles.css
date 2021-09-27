@@ -1,0 +1,16 @@
+* {
+    font-family: sans-serif;
+}
+
+button {
+    size: 1em;
+}
+
+section {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px dashed gray;
+    margin-bottom: auto;
+    justify-content: space-around;
+    padding: 3%;
+}
