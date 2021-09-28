@@ -1,121 +1,122 @@
-<html>
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Lofi Messages</title>
-        <link href="default-styles.css" type="text/css" rel="stylesheet" />
-        <script>
-            const parseJSON = (xhr, content) => {
-                if(xhr.response && xhr.getResponseHeader('Content-Type') === 'application/json') {
-                    const obj = JSON.parse(xhr.response);
-                    console.dir(obj);
+<!DOCTYPE html>
+<html lang="en">
 
-                    if(obj.message) {
-                        content.innerHTML += `<p>${obj.message}</p>`;
-                    }
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lofi Messages</title>
+    <link href="default-styles.css" type="text/css" rel="stylesheet" />
+    <script>
+        const parseJSON = (xhr, content) => {
+            if (xhr.response && xhr.getResponseHeader('Content-Type') === 'application/json') {
+                const obj = JSON.parse(xhr.response);
+                console.dir(obj);
+
+                if (obj.message) {
+                    content.innerHTML += `<p>${obj.message}</p>`;
                 }
             }
+        }
 
-            const handleResponse = (xhr) => {
-                const content = document.querySelector("#messageContainer");
+        const handleResponse = (xhr) => {
+            const content = document.querySelector("#messageContainer");
 
-                switch (xhr.status) {
-                    case 200:
-                        content.innerHTML = '<b>Success!</b>';
-                        break;
-                    case 201:
-                        content.innerHTML = '<b>Created!</b>';
-                        break;
-                    case 204:
-                        content.innerHTML = '<b>Updated (No Content)!</b>';
-                        break;
-                    case 400:
-                        content.innerHTML = '<b>Bad Request :(</b>';
-                        break;
-                    default:
-                        content.innerHTML = '<b>Error code not implemented by client</b>';
-                        break;
-                }
-
-                parseJSON(xhr, content);
-            };
-    
-            const sendPost = (e, nameForm) => {
-                e.preventDefault();
-
-                const nameAction = nameForm.getAttribute('action');
-                const nameMethod = nameForm.getAttribute('method');
-
-                const nameField = nameForm.querySelector('#nameField');
-                const msgField = nameForm.querySelector('#msgField');
-
-                const xhr = new XMLHttpRequest();
-                xhr.open(nameMethod, nameAction);
-
-                xhr.setRequestHeader('Accept', 'application/json');
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-                xhr.onload = () => handleResponse(xhr);
-
-                const formData = `name=${nameField.value}&message=${msgField.value}`;
-                xhr.send(formData);
-
-                return false;
+            switch (xhr.status) {
+                case 200:
+                    content.innerHTML = '<b>Success!</b>';
+                    break;
+                case 201:
+                    content.innerHTML = '<b>Created!</b>';
+                    break;
+                case 204:
+                    content.innerHTML = '<b>Updated (No Content)!</b>';
+                    break;
+                case 400:
+                    content.innerHTML = '<b>Bad Request :(</b>';
+                    break;
+                default:
+                    content.innerHTML = '<b>Error code not implemented by client</b>';
+                    break;
             }
 
-            const init = () => {
-                // An Event *Handler*
-                // document.querySelector("#btnJoke").onclick = downloadJoke; // same as below, less typing, use which ever version you prefer
-                const nameForm = document.querySelector('#nameForm');
+            parseJSON(xhr, content);
+        };
 
-                const addUser = (e) => sendPost(e, nameForm);
-                
-                nameForm.addEventListener('submit', addUser);
-    
-                // **Actually, event handlers and listeners are NOT exactly the same in all use cases - what ARE the differences?**
-            }
-    
-            window.onload = init;
-        </script>
-    </head>
-    <body>
-        <header>
-            <nav>
-                <a href="/">Home</a> |
-                <a href="/lofi-messages">Read</a> |
-                <span id="current">Write</span> | 
-                <a href="/music-list">Music</a> | 
-                <a href="/suggest">Suggest</a> |
-                <a href="/admin">Admin</a>
-            </nav>
-            <h1>
-                Write a Message
-            </h1>
-        </header>
-        
-        <main>
-            <p>Write a message for someone else to read!</p>
-            <hr>
-            <form id="nameForm" action="/addUser" method="post">
-                <label for="name">Name: </label>
-                <input id="nameField" type ="text" name="name" />
-            </br></br>
-                <label for="msg">Message: </label>
-                <input id="msgField" type ="text" name="message" />
-                <!-- <textarea id="msgField" name="message"></textarea> -->
-            </br></br>
-                <input type="submit" value="Send Message" />
-            </form>
-            <div id="messageContainer"></div>
-        </main>
+        const sendPost = (e, nameForm) => {
+            e.preventDefault();
+
+            const nameAction = nameForm.getAttribute('action');
+            const nameMethod = nameForm.getAttribute('method');
+
+            const nameField = nameForm.querySelector('#nameField');
+            const msgField = nameForm.querySelector('#msgField');
+
+            const xhr = new XMLHttpRequest();
+            xhr.open(nameMethod, nameAction);
+
+            xhr.setRequestHeader('Accept', 'application/json');
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onload = () => handleResponse(xhr);
+
+            const formData = `name=${nameField.value}&message=${msgField.value}`;
+            xhr.send(formData);
+
+            return false;
+        }
+
+        const init = () => {
+            // An Event *Handler*
+            // document.querySelector("#btnJoke").onclick = downloadJoke; // same as below, less typing, use which ever version you prefer
+            const nameForm = document.querySelector('#nameForm');
+
+            const addUser = (e) => sendPost(e, nameForm);
+
+            nameForm.addEventListener('submit', addUser);
+
+            // **Actually, event handlers and listeners are NOT exactly the same in all use cases - what ARE the differences?**
+        }
+
+        window.onload = init;
+    </script>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="/">Home</a> |
+            <a href="/lofi-messages">Read</a> |
+            <span id="current">Write</span> |
+            <a href="/music-list">Music</a> |
+            <a href="/suggest">Suggest</a> |
+            <a href="/admin">Admin</a>
+        </nav>
+        <h1>
+            Write a Message
+        </h1>
+    </header>
+
+    <main>
+        <p>Write a message for someone else to read!</p>
         <hr>
-        <footer>
-            <img src="lofi-image.png" alt="Cartoon Person with beanie and headphones on.">
-            <p>© 2021 Brandon Ly</p>
-        </footer>
-    </body>
-    </html>
+        <form id="nameForm" action="/addUser" method="post">
+            <label for="nameField">Name: </label>
+            <input id="nameField" type="text" name="name" />
+            <br/><br/>
+            <label for="msgField">Message: </label>
+            <input id="msgField" type="text" name="message" />
+            <!-- <textarea id="msgField" name="message"></textarea> -->
+            <br/><br/>
+            <input type="submit" value="Send Message" />
+        </form>
+        <div id="messageContainer"></div>
+    </main>
+    <hr>
+    <footer>
+        <img src="lofi-image.png" alt="Cartoon Person with beanie and headphones on.">
+        <p>© 2021 Brandon Ly</p>
+    </footer>
+</body>
+
 </html>
