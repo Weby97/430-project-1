@@ -2,15 +2,56 @@
     font-family: sans-serif;
 }
 
+footer {
+    font-style: italic;
+    color: gray;
+}
+
 button {
     size: 1em;
 }
 
+nav {
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    padding: .5em;
+    background-color: plum;
+}
+
+nav a,
+nav a:link,
+nav a:visited {
+    text-decoration: none;
+    color: black;
+}
+
+nav a:hover {
+    color: darkslateblue;
+    text-decoration: line-through;
+}
+
+nav a:active {
+    color: mediumpurple;
+    text-decoration: line-through;
+}
+
+#current {
+    color: gray;
+    text-decoration: line-through;
+}
+
+.result {
+    display: inline-block;
+    border: 1px solid purple;
+    padding: .5em;
+}
+
 section {
-    display: flex;
-    flex-direction: row;
-    border-bottom: 1px dashed gray;
-    margin-bottom: auto;
-    justify-content: space-around;
-    padding: 3%;
+    border-bottom: 10px dotted gray;
+}
+
+footer img {
+    width: 120px;
+    height: 90px;
+    padding-top: 1em;
 }

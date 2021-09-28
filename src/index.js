@@ -9,17 +9,51 @@ const query = require('querystring');
 
 const htmlHandler = require('./htmlResponses.js');
 const jsonHandler = require('./jsonResponses.js');
+const imgHandler = require('./imageResponses.js');
 
 // 3 - locally this will be 3000, on Heroku it will be assigned
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
 const urlStruct = {
-  '/random-joke': jsonHandler.getRandomJokeResponse,
-  '/random-jokes': jsonHandler.getRandomJokeResponse,
+  '/': htmlHandler.getHomeResponse,
+  '/random-message': jsonHandler.getLofiMessage,
   '/default-styles.css': htmlHandler.getCSSResponse,
-  '/lofi-messages.html': htmlHandler.getMessageResponse,
+  '/lofi-image.png': imgHandler.getLofiImage,
+  '/lofi-messages': htmlHandler.getMessageResponse,
   '/joke-client.html': htmlHandler.getJokePage,
+  '/write': htmlHandler.getWritePage,
+  '/music-list': htmlHandler.getMusicPage,
+  '/suggest': htmlHandler.getSuggestPage,
+  '/admin': htmlHandler.getAdminPage,
+  '/getUsers': jsonHandler.getUsers,
   notFound: htmlHandler.get404Response,
+};
+
+// Handling requests to post something
+const handlePost = (request, response, parsedUrl) => {
+  if (parsedUrl.pathname === '/addUser') {
+    const body = [];
+
+    // If there is an error
+    request.on('error', (err) => {
+      console.dir(err);
+      response.statusCode = 400;
+      response.end();
+    });
+
+    // If there is new information coming in
+    request.on('data', (chunk) => {
+      body.push(chunk);
+    });
+
+    // Once all the information has come in
+    request.on('end', () => {
+      const bodyString = Buffer.concat(body).toString();
+      const bodyParams = query.parse(bodyString);
+
+      jsonHandler.addUser(request, response, bodyParams);
+    });
+  }
 };
 
 // 6 - this is the function that will be called every time a client request comes in
@@ -40,7 +74,10 @@ const onRequest = (request, response) => {
   console.log('params=', params);
   console.log('limit=', limit);
 
-  if (urlStruct[pathname]) {
+  // Check if it is a post request or get request
+  if (httpMethod === 'POST') {
+    handlePost(request, response, parsedUrl);
+  } else if (urlStruct[pathname]) {
     urlStruct[pathname](request, response, params, acceptedTypes, httpMethod);
   } else {
     urlStruct.notFound(request, response);

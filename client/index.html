@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="default-styles.css" type="text/css" rel="stylesheet" />
+    <title>Lofi Messages Home</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <span id ="current">Home</span> |
+            <a href="/lofi-messages">Read</a> |
+            <a href="/write">Write</a> | 
+            <a href="/music-list">Music</a> | 
+            <a href="/suggest">Suggest</a> |
+            <a href="/admin">Admin</a>
+        </nav>
+        <h1>Welcome to Lofi Messages!</h1>
+    </header>
+
+    <main>
+        <p>Help spread some positivity!</p>
+        <section>
+            <h2>Users</h2>
+            <ul>
+                <li>
+                    Want a boost to your day? Go <a href="/lofi-messages">Read</a> a thoughtful message someone left!
+                </li>
+                <li>
+                    Want to make someone else's day? Go <a href="/write">Write</a> a message!
+                </li>
+                <li>
+                    Want to suggest a song for the app? Go <a href="/suggest">Suggest</a> one (or some)!
+                </li>
+            </ul>
+        </section>
+        <section>
+            <h2>Developers</h2>
+            <p>There is no API key - Here is the list of endpoints.</p>
+            <ul>
+                <li><a href="/getUsers">/getUsers (Data Endpoint)</a></li>
+                <li><a href="/random-message">/random-message (Data Endpoint)</a></li>
+                <li><a href="/random-message?limit=2">/random-message?limit=2 (Data Endpoint w/ Parameter)</a></li>
+                <li><a href="/write">/write (POST Endpoint)</a></li>
+                <!-- <li><a href="/write?type=positive">/write?type=positive</a></li> -->
+                <li><a href="/get-music-list">/get-music-list (Data Endpoint)</a></li>
+                <li><a href="/get-music-list?limit=3">/get-music-list?limit=3 (Data Endpoint w/ Parameter</a></li>
+                <li><a href="/suggest">/suggest (POST Endpoint)</a></li>
+            </ul>
+            <p>
+                The default data format is JSON. If you send an Accept header of "text/xml", the data will be returned in XML format.
+            </p>
+            <p>
+                The default request method is GET. If you send a HEAD request, only the HTTP headers will be returned.
+            </p>
+        </section>
+        <section>
+            <h2>Administrators</h2>
+            <ul>
+                <li>
+                    <a href="/admin">Admin</a> will allow you to see and edit all the data stored on the app.
+                </li>
+                <li>
+                    Here is the <a href="/bad-link">404 Page</a>
+                </li>
+                <li>
+                    Here is the official <a href="/default-styles.css">Style Sheet</a> for our app.
+                </li>
+                <li>
+                    Here is an image found from the Internet --> <a href="/lofi-image.png">Image</a>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <img src="lofi-image.png" alt="Cartoon Person with beanie and headphones on.">
+        <p>© 2021 Brandon Ly</p>
+    </footer>
+</body>
+</html>
