@@ -10,6 +10,7 @@ const query = require('querystring');
 const htmlHandler = require('./htmlResponses.js');
 const jsonHandler = require('./jsonResponses.js');
 const imgHandler = require('./imageResponses.js');
+const audioHandler = require('./audioResponses.js');
 
 // 3 - locally this will be 3000, on Heroku it will be assigned
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
@@ -26,6 +27,11 @@ const urlStruct = {
   '/suggest': htmlHandler.getSuggestPage,
   '/admin': htmlHandler.getAdminPage,
   '/getUsers': jsonHandler.getUsers,
+  '/getSongs': jsonHandler.getSongs,
+  '/need-a-girl.mp3': audioHandler.getGirl,
+  '/slow-days.mp3': audioHandler.getSlowDays,
+  '/spring-vibes.mp3': audioHandler.getSpringVibes,
+  '/writers-block.mp3': audioHandler.getWritersBlock,
   notFound: htmlHandler.get404Response,
 };
 

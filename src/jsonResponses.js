@@ -45,6 +45,13 @@ const messages = [
   ],
 ];
 
+const songs = [
+  ['Writer\'s Block ~ Lofi Chillhop Mix Beats to chill/study/work/relax [Coffee Talk Game OST]', 'Toge Productions'],
+  ['lofi songs for slow days', 'the bootleg boy'],
+  ['(FREE) Lo-fi Type Beat - I Need a Girl', 'Lee'],
+  ['spring vibes • aesthetic music • lofi mix • chill beats to relax/study', 'Hua Studio'],
+];
+
 // Grab from this list for the songs on the app!
 const songlist = [];
 
@@ -73,6 +80,79 @@ const respondJSONMeta = (request, response, status, type, stringResponse) => {
 
 // this will return a random message based off the amount requested
 const getLofiMessage = (request, response, params, acceptedTypes, httpMethod) => {
+  // this is where message struct was originally
+
+  // The max amount of messages in the list (10)
+  const msgMax = messages.length;
+
+  let max2 = Number(params.limit); // cast `max` to a Number
+  max2 = !max2 ? 1 : max2;
+  max2 = max2 > msgMax ? msgMax : max2;
+  max2 = max2 < 1 ? 1 : max2; // if `max` is less than 1 default it to 1
+
+  const randomMessages = [];
+  const shuffledMessages = _.shuffle(messages);
+
+  for (let i = 0; i < max2; i++) {
+    // Pick a random message
+    // const number = Math.floor(Math.random() * msgMax);
+
+    // Set the values equal to the joke at said number
+    const name = shuffledMessages[i][0];
+    const message = shuffledMessages[i][1];
+
+    // Setting up the JSON format...
+    const randomMessage = {
+      name,
+      message,
+    };
+
+    randomMessages.push({ name: randomMessage.name, message: randomMessage.message });
+  }
+
+  if (acceptedTypes.includes('text/xml')) {
+    let responseXML = '';
+    if (max2 > 1) {
+      responseXML += `
+      <messages>
+        `;
+      randomMessages.forEach((e) => {
+        responseXML
+        += `<quote>
+            <message>${e.message}</message>
+            <name>${e.name}</name>
+          </quote>
+
+        `;
+      });
+      responseXML += '</messages>';
+    } else {
+      responseXML += `
+      <quote>
+        <message>${randomMessages[0].message}</message>
+        <name>${randomMessages[0].name}</name>
+      </quote>
+        `;
+    }
+
+    if (httpMethod === 'HEAD') {
+      return respondJSONMeta(request, response, 200, 'text/xml', responseXML);
+    }
+    // send back the XML to the request
+    return respond(request, response, responseXML, 'text/xml', 200);
+  }
+
+  const messageString = JSON.stringify(randomMessages);
+
+  if (httpMethod === 'HEAD') {
+    return respondJSONMeta(request, response, 200, 'application/json', messageString);
+  }
+  // send back the JSON to the request
+  return respond(request, response, messageString, 'application/json', 200);
+};
+
+// this will return a certain amount of suggestions from our suggestion list
+const getSuggestions = (request, response, params, acceptedTypes, httpMethod) => {
   // this is where message struct was originally
 
   // The max amount of messages in the list (10)
@@ -187,6 +267,8 @@ const addUser = (request, response, body) => {
 // This will return the array of users and their responses
 const getUsers = (request, response) => respond(request, response, JSON.stringify(messages), 'application/json', 200);
 
+const getSongs = (request, response) => respond(request, response, JSON.stringify(songs), 'application/json', 200);
+
 module.exports = {
-  getLofiMessage, respondJSONMeta, notFoundMeta, addUser, getUsers,
+  getLofiMessage, respondJSONMeta, notFoundMeta, addUser, getUsers, getSongs,
 };
