@@ -21,13 +21,13 @@ const urlStruct = {
   '/default-styles.css': htmlHandler.getCSSResponse,
   '/lofi-image.png': imgHandler.getLofiImage,
   '/lofi-messages': htmlHandler.getMessageResponse,
-  '/joke-client.html': htmlHandler.getJokePage,
   '/write': htmlHandler.getWritePage,
   '/music-list': htmlHandler.getMusicPage,
   '/suggest': htmlHandler.getSuggestPage,
   '/admin': htmlHandler.getAdminPage,
   '/getUsers': jsonHandler.getUsers,
   '/getSongs': jsonHandler.getSongs,
+  '/getSuggestions': jsonHandler.getSuggestions,
   '/need-a-girl.mp3': audioHandler.getGirl,
   '/slow-days.mp3': audioHandler.getSlowDays,
   '/spring-vibes.mp3': audioHandler.getSpringVibes,
@@ -58,6 +58,29 @@ const handlePost = (request, response, parsedUrl) => {
       const bodyParams = query.parse(bodyString);
 
       jsonHandler.addUser(request, response, bodyParams);
+    });
+  }
+  if (parsedUrl.pathname === '/addSuggestion') {
+    const body = [];
+
+    // If there is an error
+    request.on('error', (err) => {
+      console.dir(err);
+      response.statusCode = 400;
+      response.end();
+    });
+
+    // If there is new information coming in
+    request.on('data', (chunk) => {
+      body.push(chunk);
+    });
+
+    // Once all the information has come in
+    request.on('end', () => {
+      const bodyString = Buffer.concat(body).toString();
+      const bodyParams = query.parse(bodyString);
+
+      jsonHandler.addSuggestion(request, response, bodyParams);
     });
   }
 };

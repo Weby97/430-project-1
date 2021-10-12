@@ -46,12 +46,16 @@
                 <li><a href="/write">/write (POST Endpoint)</a></li>
                 <!-- <li><a href="/write?type=positive">/write?type=positive</a></li> -->
                 <li><a href="/getSongs">/getSongs (Data Endpoint)</a></li>
-                <li><a href="/get-music-list?limit=3">/get-music-list?limit=3 (Data Endpoint w/ Parameter</a></li>
+                <li><a href="/getSuggestions?limit=2">/getSuggestions?limit=2 (Data Endpoint w/ Parameter)</a></li>
                 <li><a href="/suggest">/suggest (POST Endpoint)</a></li>
             </ul>
             <p>
-                The default data format is JSON. If you send an Accept header of "text/xml", the data will be returned in XML format.
+                The default data format is JSON. If you send an Accept header of "text/xml", the data will be returned in XML format for the following endpoints:
             </p>
+            <ul>
+                <li><a href="/random-message?limit=2">/random-message?limit=2 (Data Endpoint w/ Parameter)</a></li>
+                <li><a href="/getSuggestions?limit=2">/getSuggestions?limit=2 (Data Endpoint w/ Parameter)</a></li>
+            </ul>
             <p>
                 The default request method is GET. If you send a HEAD request, only the HTTP headers will be returned.
             </p>

@@ -75,7 +75,28 @@
 
             nameForm.addEventListener('submit', addUser);
 
-            // **Actually, event handlers and listeners are NOT exactly the same in all use cases - what ARE the differences?**
+            // Change this when adding a new song (not the best solution but it will have to do for now)
+            let songLength = 4;
+            
+            let a = Math.floor(Math.random()*songLength);
+            let song = document.querySelector("#soundtrack")
+            switch (a) {
+                case 0:
+                    song.innerHTML = `<audio controls loop autoplay><source src="need-a-girl.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                    break;
+                case 1: 
+                    song.innerHTML = `<audio controls loop autoplay><source src="slow-days.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                    break;
+                case 2: 
+                    song.innerHTML = `<audio controls loop autoplay><source src="spring-vibes.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                    break;
+                case 3:
+                    song.innerHTML = `<audio controls loop autoplay><source src="writers-block.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                    break;
+                default:
+                    song.innerHTML = `<audio controls loop autoplay><source src="need-a-girl.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                    break;
+            }
         }
 
         window.onload = init;
@@ -114,6 +135,7 @@
     </main>
     <hr>
     <footer>
+        <div id="soundtrack"></div>
         <img src="lofi-image.png" alt="Cartoon Person with beanie and headphones on.">
         <p>© 2021 Brandon Ly</p>
     </footer>

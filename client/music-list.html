@@ -8,69 +8,68 @@
     <title>Playlist</title>
     <link href="default-styles.css" type="text/css" rel="stylesheet" />
     <script>
-        // const handleResponse = (e) => {
-        //     console.log("e.target =", e.target); // here, `e.target` is the `xhr` object
-        //     console.log("e.target.response = ", e.target.response); // so that means this is a string of "msg" JSON
-        //     const obj = JSON.parse(e.target.response); // turn it back into an object
-        //     console.log("obj=", obj);
-        //     // now go ahead and update #messageContainer with the contents of the joke
-        //     document.querySelector("#messageContainer").innerHTML = `<p>"${obj[0].message}"</br></br>-<b><i>${obj[0].name}</i></b></p>`;
-        // };
+        const handleResponses = (e) => {
+            console.log("e.target =", e.target); // here, `e.target` is the `xhr` object
+            console.log("e.target.response = ", e.target.response); // so that means this is a string of "joke" JSON
+            const objs = JSON.parse(e.target.response); // turn it back into an object
+            console.log("objs=", objs);
+            const container = document.querySelector('#songContainer');
+            container.innerHTML = ``;
+            // now go ahead and update the container with the contents of the song
+            for (let i = 0; i < objs.length; i++) {
+                container.innerHTML +=
+                    `<p>"<a href="${objs[i][2]}"><i>${objs[i][0]}</i></a>" - ${objs[i][1]}</p>\n`;
+            }
 
-        // const downloadJoke = (e) => {
-        //     // remember that an `Event` object gets passed along every time that an event handler or listener calls a function
-        //     // the `target` property of that event points at the element that sent the event, in this case a button
-        //     console.log(`An element of id=${e.target.id} was clicked!`);
+        };
 
-        //     const msgURL = "/get-songs";
-        //     const xhr = new XMLHttpRequest();
-        //     xhr.onload = handleResponse;
-        //     xhr.open("GET", msgURL);
-        //     // with XHR, after we open a connection, but before we `send()`, we can set 1 or more HTTP request headers
-        //     // this isn't strictly necessary because "/random-joke" sends JSON by default
-        //     xhr.setRequestHeader('Accept', "application/javascript");
-        //     xhr.send();
-        // };
+        const downloadSongs = (e) => {
+            // remember that an `Event` object gets passed along every time that an event handler or listener calls a function
+            // the `target` property of that event points at the element that sent the event, in this case a button
+            console.log(`An element of id=${e.target.id} was clicked!`);
 
-        // const handleResponses = (e) => {
-        //     console.log("e.target =", e.target); // here, `e.target` is the `xhr` object
-        //     console.log("e.target.response = ", e.target.response); // so that means this is a string of "joke" JSON
-        //     const objs = JSON.parse(e.target.response); // turn it back into an object
-        //     console.log("objs=", objs);
-        //     // now go ahead and update #jokesContainer with the contents of the joke
-        //     let jokesHtml = ``;
-        //     for(let i = 0; i < 5; i++){
-        //         document.querySelector(`#jokesContainer${i+1}`).innerHTML = `<p> ${i+1}.<b>${objs[i].q}</b></br></br><b><i>${objs[i].a}</i></b></p>`;
-        //     };
-
-        // };
-
-        // const downloadJokes = (e) => {
-        //     // remember that an `Event` object gets passed along every time that an event handler or listener calls a function
-        //     // the `target` property of that event points at the element that sent the event, in this case a button
-        //     console.log(`An element of id=${e.target.id} was clicked!`);
-
-        //     const jokeURL = "/random-jokes?limit=5";
-        //     const xhr2 = new XMLHttpRequest();
-        //     xhr2.onload = handleResponses;
-        //     xhr2.open("GET", jokeURL);
-        //     // with XHR, after we open a connection, but before we `send()`, we can set 1 or more HTTP request headers
-        //     // this isn't strictly necessary because "/random-joke" sends JSON by default
-        //     xhr2.setRequestHeader('Accept', "application/javascript");
-        //     xhr2.send();
-        // };
+            const jokeURL = "/getSongs";
+            const xhr2 = new XMLHttpRequest();
+            xhr2.onload = handleResponses;
+            xhr2.open("GET", jokeURL);
+            // with XHR, after we open a connection, but before we `send()`, we can set 1 or more HTTP request headers
+            // this isn't strictly necessary because "/random-joke" sends JSON by default
+            xhr2.setRequestHeader('Accept', "application/javascript");
+            xhr2.send();
+        };
 
         const init = () => {
-            // An Event *Handler*
-            // document.querySelector("#btnJoke").onclick = downloadJoke; // same as below, less typing, use which ever version you prefer
+            //An Event *Handler*
+            document.querySelector("#btnSongs").onclick = downloadSongs; // same as below, less typing, use which ever version you prefer
 
-            // An Event *Listener*
-            // document.querySelector("#btnMessage").addEventListener("click", downloadJoke);
+            //An Event *Listener*
+            //document.querySelector("#btnMessage").addEventListener("click", downloadJoke);
 
-            // **Actually, event handlers and listeners are NOT exactly the same in all use cases - what ARE the differences?**
+            // Change this when adding a new song (not the best solution but it will have to do for now)
+            let songLength = 4;
+            
+            let a = Math.floor(Math.random()*songLength);
+            let song = document.querySelector("#soundtrack")
+            switch (a) {
+                case 0:
+                    song.innerHTML = `<audio controls loop autoplay><source src="need-a-girl.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                    break;
+                case 1: 
+                    song.innerHTML = `<audio controls loop autoplay><source src="slow-days.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                    break;
+                case 2: 
+                    song.innerHTML = `<audio controls loop autoplay><source src="spring-vibes.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                    break;
+                case 3:
+                    song.innerHTML = `<audio controls loop autoplay><source src="writers-block.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                    break;
+                default:
+                    song.innerHTML = `<audio controls loop autoplay><source src="need-a-girl.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                    break;
+            }
         }
 
-        //window.onload = init;
+        window.onload = init;
     </script>
 </head>
 
@@ -91,16 +90,16 @@
 
     <main>
         <p>Here you can find what songs are on the current playlist for the app!</p>
-        <i>(Currently non-functional)</i>
         <hr>
-        <button id="btnMessage" disabled>Get Songs</button>
-        <div id="messageContainer">
+        <button id="btnSongs">Get Songs</button>
+        <div id="songContainer">
             
         </div>
         
     </main>
     <hr>
     <footer>
+        <div id="soundtrack"></div>
         <img src="lofi-image.png" alt="Cartoon Person with beanie and headphones on.">
         <p>© 2021 Brandon Ly</p>
     </footer>

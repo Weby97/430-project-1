@@ -60,7 +60,7 @@
 
             xhr.onload = () => handleResponse(xhr);
 
-            const formData = `name=${nameField.value}&message=${msgField.value}`;
+            const formData = `name=${nameField.value}&link=${linkField.value}`;
             xhr.send(formData);
 
             return false;
@@ -75,7 +75,28 @@
 
             nameForm.addEventListener('submit', addUser);
 
-            // **Actually, event handlers and listeners are NOT exactly the same in all use cases - what ARE the differences?**
+            // Change this when adding a new song (not the best solution but it will have to do for now)
+            let songLength = 4;
+            
+            let a = Math.floor(Math.random()*songLength);
+            let song = document.querySelector("#soundtrack")
+            switch (a) {
+                case 0:
+                    song.innerHTML = `<audio controls loop autoplay><source src="need-a-girl.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                    break;
+                case 1: 
+                    song.innerHTML = `<audio controls loop autoplay><source src="slow-days.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                    break;
+                case 2: 
+                    song.innerHTML = `<audio controls loop autoplay><source src="spring-vibes.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                    break;
+                case 3:
+                    song.innerHTML = `<audio controls loop autoplay><source src="writers-block.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                    break;
+                default:
+                    song.innerHTML = `<audio controls loop autoplay><source src="need-a-girl.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                    break;
+            }
         }
 
         window.onload = init;
@@ -99,22 +120,21 @@
 
     <main>
         <p>Got a song you wanna listen to while you read and write? Send a suggestion!</p>
-        <i>(Currently Non-functional)</i>
         <hr>
-        <form id="nameForm" action="/addUser" method="post">
+        <form id="nameForm" action="/addSuggestion" method="post">
             <label for="nameField">Your Name: </label>
             <input id="nameField" type="text" name="name" />
             <br/><br/>
-            <label for="msgField">Link to Song: </label>
-            <input id="msgField" type="text" name="message" />
-            <!-- <textarea id="msgField" name="message"></textarea> -->
+            <label for="linkField">Link to Song: </label>
+            <input id="linkField" type="text" name="link"/>
             <br/><br/>
-            <input type="submit" value="Submit" disabled/>
+            <input type="submit" value="Submit"/>
         </form>
         <div id="messageContainer"></div>
     </main>
     <hr>
     <footer>
+        <div id="soundtrack"></div>
         <img src="lofi-image.png" alt="Cartoon Person with beanie and headphones on.">
         <p>© 2021 Brandon Ly</p>
     </footer>

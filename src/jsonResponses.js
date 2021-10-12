@@ -46,10 +46,15 @@ const messages = [
 ];
 
 const songs = [
-  ['Writer\'s Block ~ Lofi Chillhop Mix Beats to chill/study/work/relax [Coffee Talk Game OST]', 'Toge Productions'],
-  ['lofi songs for slow days', 'the bootleg boy'],
-  ['(FREE) Lo-fi Type Beat - I Need a Girl', 'Lee'],
-  ['spring vibes • aesthetic music • lofi mix • chill beats to relax/study', 'Hua Studio'],
+  ['Writer\'s Block ~ Lofi Chillhop Mix Beats to chill/study/work/relax [Coffee Talk Game OST]', 'Toge Productions', 'https://youtu.be/_UgIUz2APOw'],
+  ['lofi songs for slow days', 'the bootleg boy', 'https://youtu.be/AzV77KFsLn4'],
+  ['(FREE) Lo-fi Type Beat - I Need a Girl', 'Lee', 'https://youtu.be/xVf4Zk8CBj0'],
+  ['spring vibes • aesthetic music • lofi mix • chill beats to relax/study', 'Hua Studio', 'https://youtu.be/0BhaDPmEOic'],
+];
+
+const suggestions = [
+  ['Derik', 'https://youtu.be/UakHkEFqiGs'],
+  ['Sara', 'https://youtu.be/uDOunE1tJiA'],
 ];
 
 // Grab from this list for the songs on the app!
@@ -153,58 +158,54 @@ const getLofiMessage = (request, response, params, acceptedTypes, httpMethod) =>
 
 // this will return a certain amount of suggestions from our suggestion list
 const getSuggestions = (request, response, params, acceptedTypes, httpMethod) => {
-  // this is where message struct was originally
-
   // The max amount of messages in the list (10)
-  const msgMax = messages.length;
+  const msgMax = suggestions.length;
 
   let max2 = Number(params.limit); // cast `max` to a Number
   max2 = !max2 ? 1 : max2;
   max2 = max2 > msgMax ? msgMax : max2;
-  max2 = max2 < 1 ? 1 : max2; // if `max` is less than 1 default it to 1
+  max2 = max2 < 1 ? 1 : max2; // if `max` is less than 1 default it to 0
 
   const randomMessages = [];
-  const shuffledMessages = _.shuffle(messages);
+  const shuffledMessages = _.shuffle(suggestions);
 
   for (let i = 0; i < max2; i++) {
     // Pick a random message
-    // const number = Math.floor(Math.random() * msgMax);
-
     // Set the values equal to the joke at said number
     const name = shuffledMessages[i][0];
-    const message = shuffledMessages[i][1];
+    const link = shuffledMessages[i][1];
 
     // Setting up the JSON format...
     const randomMessage = {
       name,
-      message,
+      link,
     };
 
-    randomMessages.push({ name: randomMessage.name, message: randomMessage.message });
+    randomMessages.push({ name: randomMessage.name, link: randomMessage.link });
   }
 
   if (acceptedTypes.includes('text/xml')) {
     let responseXML = '';
     if (max2 > 1) {
       responseXML += `
-      <messages>
+      <suggestions>
         `;
       randomMessages.forEach((e) => {
         responseXML
-        += `<quote>
-            <message>${e.message}</message>
+        += `<suggestion>
+            <link>${e.link}</link>
             <name>${e.name}</name>
-          </quote>
+          </suggestion>
 
         `;
       });
-      responseXML += '</messages>';
+      responseXML += '</suggestions>';
     } else {
       responseXML += `
-      <quote>
-        <message>${randomMessages[0].message}</message>
+      <suggestion>
+        <link>${randomMessages[0].link}</link>
         <name>${randomMessages[0].name}</name>
-      </quote>
+      </suggestion>
         `;
     }
 
@@ -264,11 +265,54 @@ const addUser = (request, response, body) => {
   return respondJSONMeta(request, response, responseCode, 'application/json', JSON.stringify(responseJSON));
 };
 
+const addSuggestion = (request, response, body) => {
+  const responseJSON = {
+    message: 'Your Name and Song Link are both required',
+  };
+
+  if (!body.name || !body.link) {
+    responseJSON.id = 'missingParams';
+    return respond(request, response, JSON.stringify(responseJSON), 'application/json', 400);
+  }
+
+  let responseCode = 201;
+  let existingName = false;
+  let index;
+
+  for (let i = 0; i < suggestions.length; i++) {
+    if (suggestions[i][0] === body.name) {
+      existingName = true;
+      index = i;
+    }
+  }
+
+  if (existingName) {
+    responseCode = 204;
+    suggestions[index][1] = body.link;
+  } else {
+    suggestions.push([body.name, body.link]);
+  }
+
+  if (responseCode === 201) {
+    responseJSON.message = 'Created Successfully!';
+    return respond(request, response, JSON.stringify(responseJSON), 'application/json', responseCode);
+  }
+
+  return respondJSONMeta(request, response, responseCode, 'application/json', JSON.stringify(responseJSON));
+};
+
 // This will return the array of users and their responses
 const getUsers = (request, response) => respond(request, response, JSON.stringify(messages), 'application/json', 200);
 
 const getSongs = (request, response) => respond(request, response, JSON.stringify(songs), 'application/json', 200);
 
 module.exports = {
-  getLofiMessage, respondJSONMeta, notFoundMeta, addUser, getUsers, getSongs,
+  getLofiMessage,
+  respondJSONMeta,
+  notFoundMeta,
+  addUser,
+  getUsers,
+  getSongs,
+  addSuggestion,
+  getSuggestions,
 };
