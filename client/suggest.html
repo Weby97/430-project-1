@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Suggest a Song</title>
     <link href="default-styles.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <script>
         const parseJSON = (xhr, content) => {
             if (xhr.response && xhr.getResponseHeader('Content-Type') === 'application/json') {
@@ -105,7 +106,7 @@
 
 <body>
     <header>
-        <nav>
+        <nav id="suggest">
             <a href="/">Home</a> |
             <a href="/lofi-messages">Read</a> |
             <a href="/write">Write</a> |
@@ -113,22 +114,23 @@
             <span id="current">Suggest</span> |
             <a href="/admin">Admin</a>
         </nav>
-        <h1>
+        <br>
+        <h1 class="title is-one">
             Suggest a Song!
         </h1>
     </header>
 
     <main>
-        <p>Got a song you wanna listen to while you read and write? Send a suggestion!</p>
+        <h2 class="subtitle">Got a song you wanna listen to while you read and write? Send a suggestion!</h2>
         <hr>
         <form id="nameForm" action="/addSuggestion" method="post">
-            <label for="nameField">Your Name: </label>
-            <input id="nameField" type="text" name="name" />
+            <label class="label for="nameField">Your Name: </label>
+            <input class="input is-danger" id="nameField" type="text" name="name" />
             <br/><br/>
-            <label for="linkField">Link to Song: </label>
-            <input id="linkField" type="text" name="link"/>
+            <label class="label for="linkField">Link to Song: </label>
+            <input class="input is-danger" id="linkField" type="text" name="link"/>
             <br/><br/>
-            <input type="submit" value="Submit"/>
+            <input class="button is-danger is-outlined" type="submit" value="Submit"/>
         </form>
         <div id="messageContainer"></div>
     </main>

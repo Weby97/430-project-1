@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Lofi Messages</title>
     <link href="default-styles.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <script>
         const parseJSON = (xhr, content) => {
             if (xhr.response && xhr.getResponseHeader('Content-Type') === 'application/json') {
@@ -105,7 +106,7 @@
 
 <body>
     <header>
-        <nav>
+        <nav id='write'>
             <a href="/">Home</a> |
             <a href="/lofi-messages">Read</a> |
             <span id="current">Write</span> |
@@ -113,23 +114,24 @@
             <a href="/suggest">Suggest</a> |
             <a href="/admin">Admin</a>
         </nav>
-        <h1>
+        <br>
+        <h1 class="title is-one">
             Write a Message
         </h1>
     </header>
 
     <main>
-        <p>Write a message for someone else to read!</p>
+        <h2 class="subtitle">Write a message for someone else to read!</h2>
         <hr>
         <form id="nameForm" action="/addUser" method="post">
-            <label for="nameField">Name: </label>
-            <input id="nameField" type="text" name="name" />
+            <label class="label" for="nameField">Name: </label>
+            <input class="input is-warning" id="nameField" type="text" name="name" />
             <br/><br/>
-            <label for="msgField">Message: </label>
-            <input id="msgField" type="text" name="message" />
+            <label class="label" for="msgField">Message: </label>
+            <input class="input is-warning" id="msgField" type="text" name="message" />
             <!-- <textarea id="msgField" name="message"></textarea> -->
             <br/><br/>
-            <input type="submit" value="Send Message" />
+            <input class="button is-warning" type="submit" value="Send Message" />
         </form>
         <div id="messageContainer"></div>
     </main>

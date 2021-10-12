@@ -1,3 +1,6 @@
+@import url(../node_modules/bulma/css/bulma.css);
+@import url(../node_modules/bulma/bulma.sass);
+
 * {
     font-family: sans-serif;
 }
@@ -7,15 +10,47 @@ footer {
     color: gray;
 }
 
-button {
-    size: 1em;
+#lofi {
+    border-top: 2px solid #4b5ac2;
+    border-bottom: 2px solid #4b5ac2;
+    padding: .5em;
+    background-color: #4b5ac2;
 }
 
-nav {
-    border-top: 2px solid black;
-    border-bottom: 2px solid black;
+#write {
+    border-top: 2px solid #ffd253;
+    border-bottom: 2px solid #ffd253;
     padding: .5em;
-    background-color: plum;
+    background-color: #ffd253;
+}
+
+/* fbf7cf deaaff */
+#home {
+    border-top: 2px solid #ffc4d6;
+    border-bottom: 2px solid #ffc4d6;
+    padding: .5em;
+    background-color: #ffc4d6;
+}
+
+#music {
+    border-top: 2px solid #9cdfd0;
+    border-bottom: 2px solid #9cdfd0;
+    padding: .5em;
+    background-color: #9cdfd0;
+}
+
+#suggest {
+    border-top: 2px solid #D25559;
+    border-bottom: 2px solid #D25559;
+    padding: .5em;
+    background-color: #D25559;
+}
+
+#admin {
+    border-top: 2px solid #886D6D;
+    border-bottom: 2px solid #886D6D;
+    padding: .5em;
+    background-color: #886D6D;
 }
 
 nav a,

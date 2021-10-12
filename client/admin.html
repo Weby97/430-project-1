@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Lofi Messages</title>
     <link href="default-styles.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <script>
         const editMsg = (index, type) => {
             const i = index;
@@ -39,10 +40,12 @@
             container.innerHTML = ``;
             for (let i = 0; i < obj.length; i++) {
                 container.innerHTML +=
-                    `<div  class="result">
-                        <p id="r${i}">"${obj[i].message}"</br></br>-<b><i>${obj[i].name}</i></b></p>
-                        <button onclick="editMsg(${i}, \'msg\')">Edit</button>
-                    </div>`;
+                    `<article class="message is-dark">
+                        <div class="message-body">
+                            <p id="r${i}">"${obj[i].message}"</br></br>-<b><i>${obj[i].name}</i></b></p>
+                            <button class="button is-dark is-light is-small" onclick="editMsg(${i}, \'msg\')">Edit</button>
+                        </div>
+                    </article>`;
             }
         };
 
@@ -56,9 +59,17 @@
             container.innerHTML = ``;
             for (let i = 0; i < obj.length; i++) {
                 container.innerHTML +=
-                    `<div class="result">
-                        <p id="r${i}">"<a href="${obj[i][2]}"><i>${obj[i][0]}</i></a>" - ${obj[i][1]}</p>\n
-                    </div>`;
+                    `<article class="message is-dark">
+                        <div class="message-header">
+                            <p>${obj[i][1]}</p>
+                        </div>
+                        <div class="message-body">
+                            <a href="${obj[i][2]}"><i>${obj[i][0]}</i></a>
+                        </div>
+                    </article>`;
+                    // `<div class="result">
+                    //     <p id="r${i}">"<a href="${obj[i][2]}"><i>${obj[i][0]}</i></a>" - ${obj[i][1]}</p>\n
+                    // </div>`;
             }
         };
 
@@ -72,10 +83,12 @@
             container.innerHTML = ``;
             for (let i = 0; i < obj.length; i++) {
                 container.innerHTML +=
-                    `<div  class="result">
-                        <p id="r${i}">"<a href="${obj[i].link}">${obj[i].link}</a>"</br></br>-<b><i>${obj[i].name}</i></b></p>
-                        <button onclick="editMsg(${i}, \'suggest\')">Edit</button>
-                    </div>`;
+                    `<article class="message is-dark">
+                        <div class="message-body">
+                            <p id="r${i}">"<a href="${obj[i].link}">${obj[i].link}</a>"</br></br>-<b><i>${obj[i].name}</i></b></p>
+                            <button class="button is-dark is-light is-small" onclick="editMsg(${i}, \'suggest\')">Edit</button>
+                        </div>
+                    </article>`;
             }
         };
 
@@ -229,7 +242,7 @@
 
 <body>
     <header>
-        <nav>
+        <nav id="admin">
             <a href="/">Home</a> |
             <a href="/lofi-messages">Read</a> |
             <a href="/write">Write</a> |
@@ -237,32 +250,33 @@
             <a href="/suggest">Suggest</a> |
             <span id="current">Admin</span>
         </nav>
-        <h1>
+        <br>
+        <h1 class="title is-one">
             Administrators
         </h1>
     </header>
 
     <main>
-        <p>Access and edit all data here. Clicking edit will auto fill the editor on the bottom of the page.</p>
+        <h2 class="subtitle">Access and edit all data here. Clicking edit will auto fill the editor on the bottom of the page.</h2>
         <hr>
-        <button id="btnMessage">Get All Messages</button>
-        <button id="btnSongs">Get All Songs</button>
-        <button id="btnSuggest">Get All Suggestions</button>
+        <button class="button is-dark is-outlined" id="btnMessage">Get All Messages</button>
+        <button class="button is-dark is-outlined" id="btnSongs">Get All Songs</button>
+        <button class="button is-dark is-outlined" id="btnSuggest">Get All Suggestions</button>
     </main>
     
     <hr>
     <div id="mainCtn"></div>
     <hr>
     <div id="editCtn">
-        <p>Edit the messages to what you like.</p>
+        <h3 class="subtitle is-6">Edit the messages to what you like.</h3>
             <form id="nameForm" action="/addUser" method="post">
-                <label for="nameField">Name: </label>
-                <input id="nameField" type="text" name="name" />
+                <label class="label" for="nameField">Name: </label>
+                <input class="input is-dark" id="nameField" type="text" name="name" />
                 <br/><br/>
-                <label for="msgField">Message: </label>
-                <input id="msgField" type="text" name="message" />
+                <label class="label" for="msgField">Message: </label>
+                <input class="input is-dark" id="msgField" type="text" name="message" />
                 <br/><br/>
-                <input type="submit" value="Change Message"/>
+                <input class="button is-dark is-outlined is-small" type="submit" value="Change Message"/>
             </form>
             <br>
             <div id="messageContainer"></div>

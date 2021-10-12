@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="default-styles.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <title>Lofi Messages Home</title>
 </head>
 <body>
     <header>
-        <nav>
+        <nav id='home'>
             <span id ="current">Home</span> |
             <a href="/lofi-messages">Read</a> |
             <a href="/write">Write</a> | 
@@ -17,13 +18,16 @@
             <a href="/suggest">Suggest</a> |
             <a href="/admin">Admin</a>
         </nav>
-        <h1>Welcome to Lofi Messages!</h1>
+        <br>
+        <h1 class='title is-one'>Welcome to Lofi Messages!</h1>
     </header>
 
     <main>
-        <p>Help spread some positivity!</p>
-        <section>
-            <h2>Users</h2>
+        <h2 class='subtitle'>Help spread some positivity!</p>
+        <br>
+        <section class="card">
+            <div class="card-content">
+            <h2 class="title">Users</h2>
             <ul>
                 <li>
                     Want a boost to your day? Go <a href="/lofi-messages">Read</a> a thoughtful message someone left!
@@ -35,33 +39,39 @@
                     Want to suggest a song for the app? Go <a href="/suggest">Suggest</a> one (or some)!
                 </li>
             </ul>
+        </div>
         </section>
-        <section>
-            <h2>Developers</h2>
-            <p>There is no API key - Here is the list of endpoints.</p>
+        <section class="card">
+            <div class="card-content">
+            <h2 class="title">Developers</h2>
+            <p class="subtitle">There is no API key - Here is the list of endpoints.</p>
             <ul>
-                <li><a href="/getUsers">/getUsers (Data Endpoint)</a></li>
-                <li><a href="/random-message">/random-message (Data Endpoint)</a></li>
-                <li><a href="/random-message?limit=2">/random-message?limit=2 (Data Endpoint w/ Parameter)</a></li>
-                <li><a href="/write">/write (POST Endpoint)</a></li>
+                <li>- <a href="/getUsers">/getUsers (Data Endpoint)</a></li>
+                <li>- <a href="/random-message">/random-message (Data Endpoint)</a></li>
+                <li>- <a href="/random-message?limit=2">/random-message?limit=2 (Data Endpoint w/ Parameter)</a></li>
+                <li>- <a href="/write">/write (POST Endpoint)</a></li>
                 <!-- <li><a href="/write?type=positive">/write?type=positive</a></li> -->
-                <li><a href="/getSongs">/getSongs (Data Endpoint)</a></li>
-                <li><a href="/getSuggestions?limit=2">/getSuggestions?limit=2 (Data Endpoint w/ Parameter)</a></li>
-                <li><a href="/suggest">/suggest (POST Endpoint)</a></li>
+                <li>- <a href="/getSongs">/getSongs (Data Endpoint)</a></li>
+                <li>- <a href="/getSuggestions?limit=2">/getSuggestions?limit=2 (Data Endpoint w/ Parameter)</a></li>
+                <li>- <a href="/suggest">/suggest (POST Endpoint)</a></li>
             </ul>
+            <br>
             <p>
                 The default data format is JSON. If you send an Accept header of "text/xml", the data will be returned in XML format for the following endpoints:
             </p>
             <ul>
-                <li><a href="/random-message?limit=2">/random-message?limit=2 (Data Endpoint w/ Parameter)</a></li>
-                <li><a href="/getSuggestions?limit=2">/getSuggestions?limit=2 (Data Endpoint w/ Parameter)</a></li>
+                <li>- <a href="/random-message?limit=2">/random-message?limit=2 (Data Endpoint w/ Parameter)</a></li>
+                <li>- <a href="/getSuggestions?limit=2">/getSuggestions?limit=2 (Data Endpoint w/ Parameter)</a></li>
             </ul>
+            <br>
             <p>
                 The default request method is GET. If you send a HEAD request, only the HTTP headers will be returned.
             </p>
+            </div>
         </section>
-        <section>
-            <h2>Administrators</h2>
+        <section class="card">
+            <div class="card-content">
+            <h2 class="title">Administrators</h2>
             <ul>
                 <li>
                     <a href="/admin">Admin</a> will allow you to see and edit all the data stored on the app.
@@ -76,6 +86,7 @@
                     Here is an image found from the Internet --> <a href="/lofi-image.png">Image</a>
                 </li>
             </ul>
+            </div>
         </section>
     </main>
 

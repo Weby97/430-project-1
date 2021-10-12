@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Playlist</title>
     <link href="default-styles.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <script>
         const handleResponses = (e) => {
             console.log("e.target =", e.target); // here, `e.target` is the `xhr` object
@@ -18,7 +19,15 @@
             // now go ahead and update the container with the contents of the song
             for (let i = 0; i < objs.length; i++) {
                 container.innerHTML +=
-                    `<p>"<a href="${objs[i][2]}"><i>${objs[i][0]}</i></a>" - ${objs[i][1]}</p>\n`;
+                    `<article class="message is-primary">
+                        <div class="message-header">
+                            <p>${objs[i][1]}</p>
+                        </div>
+                        <div class="message-body">
+                            <a href="${objs[i][2]}"><i>${objs[i][0]}</i></a>
+                        </div>
+                    </article>`;
+                    //`<div class="column is-primary"><p>\"<a href="${objs[i][2]}"><i>${objs[i][0]}</i></a>\" - ${objs[i][1]}</p></div>`;
             }
 
         };
@@ -75,7 +84,7 @@
 
 <body>
     <header>
-        <nav>
+        <nav id="music">
             <a href="/">Home</a> |
             <a href="/lofi-messages">Read</a> |
             <a href="/write">Write</a> |
@@ -83,15 +92,17 @@
             <a href="/suggest">Suggest</a> |
             <a href="/admin">Admin</a>
         </nav>
-        <h1>
+        <br>
+        <h1 class="title is-one">
             Music Playlist!
         </h1>
     </header>
 
     <main>
-        <p>Here you can find what songs are on the current playlist for the app!</p>
+        <h2 class="subtitle">Here you can find what songs are on the current playlist for the app!</h2>
         <hr>
-        <button id="btnSongs">Get Songs</button>
+        <button class="button is-primary is-outlined" id="btnSongs">Get Songs</button>
+        <hr>
         <div id="songContainer">
             
         </div>

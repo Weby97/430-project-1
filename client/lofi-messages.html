@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Lofi Messages</title>
     <link href="default-styles.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+
     <script>
         const handleResponse = (e) => {
             console.log("e.target =", e.target); // here, `e.target` is the `xhr` object
@@ -15,7 +17,15 @@
             console.log("obj=", obj);
             // now go ahead and update #messageContainer with the contents of the joke
             document.querySelector("#messageContainer").innerHTML =
-                `<p>"${obj[0].message}"</br></br>-<b><i>${obj[0].name}</i></b></p>`;
+                `<article class="message is-link">
+                    <div class="message-header">
+                        <p>${obj[0].name}</p>
+                    </div>
+                    <div class="message-body">
+                        ${obj[0].message}
+                    </div>
+                </article>`;
+            //`<div class="card"> <div class="card-content"><h2 class="title">"${obj[0].message}"</h2><h3 class="subtitle">- ${obj[0].name}</h3></div></div>`;
         };
 
         const downloadMessage = (e) => {
@@ -36,30 +46,35 @@
         const init = () => {
             // An Event *Handler*
             // document.querySelector("#btnJoke").onclick = downloadJoke; // same as below, less typing, use which ever version you prefer
-            
+
             // Change this when adding a new song (not the best solution but it will have to do for now)
             let songLength = 4;
 
             // An Event *Listener*
             document.querySelector("#btnMessage").addEventListener("click", downloadMessage);
 
-            let a = Math.floor(Math.random()*songLength);
+            let a = Math.floor(Math.random() * songLength);
             let song = document.querySelector("#soundtrack")
             switch (a) {
                 case 0:
-                    song.innerHTML = `<audio controls loop autoplay><source src="need-a-girl.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                    song.innerHTML =
+                        `<audio controls loop autoplay><source src="need-a-girl.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
                     break;
-                case 1: 
-                    song.innerHTML = `<audio controls loop autoplay><source src="slow-days.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                case 1:
+                    song.innerHTML =
+                        `<audio controls loop autoplay><source src="slow-days.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
                     break;
-                case 2: 
-                    song.innerHTML = `<audio controls loop autoplay><source src="spring-vibes.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                case 2:
+                    song.innerHTML =
+                        `<audio controls loop autoplay><source src="spring-vibes.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
                     break;
                 case 3:
-                    song.innerHTML = `<audio controls loop autoplay><source src="writers-block.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                    song.innerHTML =
+                        `<audio controls loop autoplay><source src="writers-block.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
                     break;
                 default:
-                    song.innerHTML = `<audio controls loop autoplay><source src="need-a-girl.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
+                    song.innerHTML =
+                        `<audio controls loop autoplay><source src="need-a-girl.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>`;
                     break;
             }
         }
@@ -70,7 +85,7 @@
 
 <body>
     <header>
-        <nav>
+        <nav id="lofi">
             <a href="/">Home</a> |
             <span id="current">Read</span> |
             <a href="/write">Write</a> |
@@ -78,15 +93,17 @@
             <a href="/suggest">Suggest</a> |
             <a href="/admin">Admin</a>
         </nav>
-        <h1>
+        <br>
+        <h1 class="title is-one">
             Lofi Messages
         </h1>
     </header>
 
     <main>
-        <p>Read a message someone left here!</p>
+        <h2 class="subtitle">Read a message someone left here!</h2>
         <hr>
-        <button id="btnMessage">Get Message</button>
+        <button class="button is-outlined is-link" id="btnMessage">Get Message</button>
+        <hr>
         <div id="messageContainer"></div>
     </main>
     <hr>
